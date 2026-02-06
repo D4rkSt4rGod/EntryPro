@@ -689,7 +689,7 @@ const EntryProColors = {
     grayHafInvis: 'rgba(115, 108, 142, 0.573)',
 }
 
-const EntryProVersion = 'alpha.1.0.0';
+const EntryProVersion = '0.1.0';
 
 
 // ============================================

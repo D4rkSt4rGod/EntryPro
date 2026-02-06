@@ -4,7 +4,7 @@ EntryPro - Unofficial Blocks Auto-Injector for playentry.org
 
 EntryPro is an unofficial tool designed to automatically inject unoficial and custom blocks into the playentry.org platform. This tool aims to enhance the user experience by providing additional functionalities and features that are not available in the standard version of playentry.org.
 
-**Current Status**: Alpha (v1.0.0-alpha) - Currently supports NPI Blocks v1.6
+**Current Status**: 0.1.0 - Currently supports NPI Blocks v1.6
 
 The current system has been provisionally built to automatically insert NPI blocks. Once EntryPro blocks are built, we plan to build a system that automatically inserts EntryPro blocks.
 
@@ -27,7 +27,7 @@ The current system has been provisionally built to automatically insert NPI bloc
 
 - `Manifest Version` - 3
 
-- `Extension Version` - alpha.1.0.0
+- `Extension Version` - 0.1.0
 
 - `Minimum Chrome` - 88+
 
@@ -45,7 +45,7 @@ The current system has been provisionally built to automatically insert NPI bloc
 
 #### Internal components
 
-- `EntryPro Extension` - alpha.1.0.0
+- `EntryPro Extension` - 0.1.0
 
 - `NPI Blocks` - 1.6
 
