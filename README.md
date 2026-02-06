@@ -11,10 +11,11 @@ The current system has been provisionally built to automatically insert NPI bloc
 ## Table of Contents
 
 - Getting Started
-- Libraries
 - Features
 - Installation
 - Usage
+- Troubleshooting
+- Contributing
 - Reference
 - Copyright and License
 
@@ -165,6 +166,57 @@ Feather of Developer Mode:
 | Blocks not appearing | 1. Check status in popup<br>2. Click "Inject Script Now" or Refresh the page      |
 | Popup not opening    | 1. Ensure extension is enabled (`chrome://extensions`)<br>2. Reload the extension |
 | Console errors       | Enable Debug Mode in settings and check Browser Console                           |
+
+## Contributing
+
+We welcome contributions to EntryPro! Here's how you can help:
+
+### Ways to Contribute
+
+#### Code Contributions:
+
+- New Block Development: Create new custom blocks for Entry
+- Bug Fixes: Identify and fix issues in the extension
+- Feature Development: Add new features to the popup
+- Code Optimization: Improve performance and efficiency
+- Documentation: Improve README, comments, and guides
+
+#### Non-Code Contributions:
+
+- Block Ideas: Suggest new block categories and functionalities
+- Testing: Test the extension and report bugs
+- Design: Improve UI/UX design
+- Translation: Help translate to other languages
+- Documentation: Write tutorials and guides
+
+#### Development Setup
+
+###### Fork the repository on GitHub
+
+##### Clone your fork locally:
+
+```bash
+git clone https://github.com/(your_username)/EntryPro.git
+cd EntryPro
+```
+
+##### Create a new branch for your feature:
+
+```bash
+git checkout -b feature/(your-feature-name)
+```
+
+###### Make your changes and test them
+
+##### Commit and push your changes:
+
+```bash
+git add .
+git commit -m "Add: your feature description"
+git push origin feature/(your-feature-name)
+```
+
+###### Create a Pull Request on GitHub
 
 ## Reference
 
