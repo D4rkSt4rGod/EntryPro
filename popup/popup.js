@@ -1,6 +1,6 @@
 // === SETTINGS MANAGEMENT ===
 
-// 기본 설정값
+// basic Settings
 const DEFAULT_SETTINGS = {
     autoInject: true,
     notifications: false,
@@ -27,6 +27,244 @@ const DEFAULT_SETTINGS = {
     skipAdvancedWarning: false // 추가: 고급 도구 경고 건너뛰기
 };
 
+// === SIMPLE STATUS DISPLAY SYSTEM ===
+
+// Only three status types
+const STATUS_TYPES = {
+    CHECKING: {
+        text: "Checking...",
+        color: "#f59e0b", // Orange/Yellow
+        className: "warning"
+    },
+    WORKSPACE_DETECTED: {
+        text: "Workspace Detected",
+        color: "#4ade80", // Green
+        className: "active"
+    },
+    NOT_WORKSPACE: {
+        text: "Not workspace page",
+        color: "#ef4444", // Red
+        className: "inactive"
+    }
+};
+
+// Update status display
+function updateStatusDisplay(statusType) {
+    const statusBadge = document.getElementById('statusBadge');
+    const statusDot = statusBadge.querySelector('.status-dot');
+    const statusText = statusBadge.querySelector('.status-text');
+    
+    if (!statusType || !statusBadge) return;
+    
+    // Update text
+    statusText.textContent = statusType.text;
+    
+    // Update color
+    statusDot.style.backgroundColor = statusType.color;
+    
+    // Remove all classes and add the correct one
+    statusDot.classList.remove('active', 'warning', 'inactive');
+    statusDot.classList.add(statusType.className);
+}
+
+// Check if URL is Entry workspace
+function isEntryWorkspaceURL(url) {
+    if (!url) return false;
+    
+    // Check for various Entry workspace patterns
+    const workspacePatterns = [
+        /playentry\.org\/ws/,
+        /playentry\.org\/entry\/playground/,
+        /playentry\.org\/\?mode=block/,
+        /playentry\.org\/#\/workspace/,
+        /playentry\.org\/project\/[^\/]+\/edit/
+    ];
+    
+    return workspacePatterns.some(pattern => pattern.test(url));
+}
+
+// Check current page status
+async function checkPageStatus() {
+    try {
+        // Start with checking status
+        updateStatusDisplay(STATUS_TYPES.CHECKING);
+        
+        // Get current tab
+        const [tab] = await chrome.tabs.query({ 
+            active: true, 
+            currentWindow: true 
+        });
+        
+        // Check if we have a valid tab
+        if (!tab || !tab.url) {
+            updateStatusDisplay(STATUS_TYPES.NOT_WORKSPACE);
+            return;
+        }
+        
+        const currentUrl = tab.url;
+        
+        // Check if it's a workspace page
+        if (isEntryWorkspaceURL(currentUrl)) {
+            updateStatusDisplay(STATUS_TYPES.WORKSPACE_DETECTED);
+        } else {
+            updateStatusDisplay(STATUS_TYPES.NOT_WORKSPACE);
+        }
+        
+    } catch (error) {
+        console.error("[Entry Pro] Status check error:", error);
+        updateStatusDisplay(STATUS_TYPES.NOT_WORKSPACE);
+    }
+}
+
+// Enable/disable buttons based on workspace detection
+function updateButtonStates(isWorkspace) {
+    const injectNowBtn = document.getElementById('injectNow');
+    const removeScriptBtn = document.getElementById('removeScript');
+    const saveBtn = document.getElementById('saveBtn');
+    
+    if (injectNowBtn) {
+        injectNowBtn.disabled = !isWorkspace;
+        injectNowBtn.style.opacity = !isWorkspace ? '0.5' : '1';
+        injectNowBtn.style.cursor = !isWorkspace ? 'not-allowed' : 'pointer';
+    }
+    
+    if (removeScriptBtn) {
+        removeScriptBtn.disabled = !isWorkspace;
+        removeScriptBtn.style.opacity = !isWorkspace ? '0.5' : '1';
+        removeScriptBtn.style.cursor = !isWorkspace ? 'not-allowed' : 'pointer';
+    }
+    
+    if (saveBtn) {
+        saveBtn.disabled = !isWorkspace;
+        saveBtn.style.opacity = !isWorkspace ? '0.5' : '1';
+        saveBtn.style.cursor = !isWorkspace ? 'not-allowed' : 'pointer';
+    }
+}
+
+// Check if URL is Entry website (any page)
+function isEntryWebsite(url) {
+    return url && url.includes('playentry.org');
+}
+
+// Try to detect if script is injected by checking page context
+async function checkScriptInjection(tabId) {
+    try {
+        // Method 1: Try to inject a script to check for NPI
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tabId },
+            func: () => {
+                // Check for NPI indicators
+                const hasNPI = typeof window.addBlock === 'function' || 
+                              typeof window.updateCategory === 'function' ||
+                              window.__entryProLoaded === true;
+                
+                // Check for Entry API category
+                const hasEntryAPICategory = document.querySelector('#entryCategoryAPI') !== null;
+                
+                return {
+                    hasNPI: hasNPI,
+                    hasAPICategory: hasEntryAPICategory,
+                    entryLoaded: typeof window.Entry !== 'undefined'
+                };
+            }
+        });
+        
+        if (results && results[0] && results[0].result) {
+            const { hasNPI, hasAPICategory, entryLoaded } = results[0].result;
+            
+            if (hasNPI || hasAPICategory) {
+                return { injected: true, entryLoaded: entryLoaded };
+            }
+        }
+        
+        return { injected: false, entryLoaded: false };
+    } catch (error) {
+        console.log("[Entry Pro] Script check failed (may not have permission):", error.message);
+        return { injected: false, entryLoaded: false, error: error.message };
+    }
+}
+
+// Check current page status
+async function checkPageStatus() {
+    try {
+        // Initial checking state
+        updateStatusDisplay(STATUS_TYPES.CHECKING);
+        
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        
+        // Check if we have a valid tab
+        if (!tab || !tab.url) {
+            updateStatusDisplay(STATUS_TYPES.EXTENSION_ERROR, "No active tab");
+            return { isWorkspace: false, scriptInjected: false };
+        }
+        
+        const currentUrl = tab.url;
+        
+        // Check if we're on Entry.org
+        if (!isEntryWebsite(currentUrl)) {
+            updateStatusDisplay(STATUS_TYPES.NOT_WORKSPACE, "Not on Entry.org");
+            return { isWorkspace: false, scriptInjected: false };
+        }
+        
+        // Check if it's a workspace page
+        const isWorkspace = isEntryWorkspaceURL(currentUrl);
+        
+        if (!isWorkspace) {
+            updateStatusDisplay(STATUS_TYPES.NOT_WORKSPACE, "Visit /ws for workspace");
+            return { isWorkspace: false, scriptInjected: false };
+        }
+        
+        // We're on a workspace page
+        try {
+            // Try to check if script is injected
+            const injectionCheck = await checkScriptInjection(tab.id);
+            
+            if (injectionCheck.injected) {
+                updateStatusDisplay(STATUS_TYPES.SCRIPT_INJECTED);
+                return { isWorkspace: true, scriptInjected: true };
+            } else {
+                // Script not injected but workspace detected
+                updateStatusDisplay(STATUS_TYPES.WORKSPACE_DETECTED);
+                return { isWorkspace: true, scriptInjected: false };
+            }
+        } catch (error) {
+            // Couldn't check injection, but we know it's a workspace
+            console.log("[Entry Pro] Injection check failed:", error.message);
+            updateStatusDisplay(STATUS_TYPES.WORKSPACE_DETECTED, "Injection check failed");
+            return { isWorkspace: true, scriptInjected: false };
+        }
+        
+    } catch (error) {
+        console.error("[Entry Pro] Status check error:", error);
+        updateStatusDisplay(STATUS_TYPES.EXTENSION_ERROR, "Check failed");
+        return { isWorkspace: false, scriptInjected: false };
+    }
+}
+
+// Enable/disable buttons based on status
+function updateButtonStates(isWorkspace, scriptInjected) {
+    const injectNowBtn = document.getElementById('injectNow');
+    const removeScriptBtn = document.getElementById('removeScript');
+    const saveBtn = document.getElementById('saveBtn');
+    
+    if (injectNowBtn) {
+        injectNowBtn.disabled = !isWorkspace || scriptInjected;
+        injectNowBtn.style.opacity = (!isWorkspace || scriptInjected) ? '0.5' : '1';
+        injectNowBtn.style.cursor = (!isWorkspace || scriptInjected) ? 'not-allowed' : 'pointer';
+    }
+    
+    if (removeScriptBtn) {
+        removeScriptBtn.disabled = !isWorkspace || !scriptInjected;
+        removeScriptBtn.style.opacity = (!isWorkspace || !scriptInjected) ? '0.5' : '1';
+        removeScriptBtn.style.cursor = (!isWorkspace || !scriptInjected) ? 'not-allowed' : 'pointer';
+    }
+    
+    if (saveBtn) {
+        saveBtn.disabled = !isWorkspace;
+        saveBtn.style.opacity = !isWorkspace ? '0.5' : '1';
+        saveBtn.style.cursor = !isWorkspace ? 'not-allowed' : 'pointer';
+    }
+}
 // Chrome extension 환경인지 확인
 const isChromeExtension = typeof chrome !== 'undefined' && chrome.storage;
 
@@ -260,7 +498,7 @@ if (removeScriptBtn) {
                     
                     // API 카테고리를 제외한 카테고리 뷰 재생성
                     if (typeof Entry !== 'undefined' && Entry.playground && Entry.playground.blockMenu) {
-                        
+
                         Entry.playground.blockMenu.banCategory('API')
                         
                         console.log('[Entry Pro] API category removed without reload');
@@ -415,6 +653,27 @@ if (warningConfirmBtn) {
 
 // === INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', async () => {
+    // Load and apply settings
     const settings = await loadSettings();
     await applySettingsToUI(settings);
+    
+    // Check and update page status on load
+    await checkPageStatus();
+    
+    // Update button states based on workspace detection
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const isWorkspace = tab && tab.url ? isEntryWorkspaceURL(tab.url) : false;
+    updateButtonStates(isWorkspace);
+    
+    // Optional: Set up periodic status checks (every 3 seconds)
+    let statusCheckInterval = setInterval(() => {
+        checkPageStatus();
+    }, 3000);
+    
+    // Clear interval when popup closes
+    window.addEventListener('unload', () => {
+        if (statusCheckInterval) {
+            clearInterval(statusCheckInterval);
+        }
+    });
 });
