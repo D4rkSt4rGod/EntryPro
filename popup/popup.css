@@ -1,0 +1,455 @@
+/* ============ VARIABLES & RESET ============ */
+:root {
+    --primary-grad: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); /* Blue to Purple */
+    --accent-lime: #84cc16; /* Lime Green */
+    --accent-lime-grad: linear-gradient(135deg, #84cc16 0%, #a3e635 100%);
+    --bg-glass: rgba(255, 255, 255, 0.95);
+    --border-color: #e2e8f0;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+    --danger: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    width: 400px;
+    height: 600px;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: var(--primary-grad);
+    user-select: none;
+    overflow: hidden; /* Container handles scroll */
+}
+
+/* ============ LAYOUT ============ */
+.container {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-glass);
+    display: flex;
+    flex-direction: column;
+}
+
+.scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 16px 0px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Scrollbar Styling */
+.scroll-area::-webkit-scrollbar { width: 6px; }
+.scroll-area::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+/* ============ HEADER ============ */
+.header {
+    padding: 20px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border-bottom: 2px solid var(--border-color);
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+/* ============ FOOTER (이전 스타일 이식) ============ */
+.footer {
+    flex-shrink: 0;        /* 푸터 크기가 줄어들지 않게 고정 */
+    padding: 20px 20px;
+    background: #ffffff;
+    border-top: 1px solid var(--border-color);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
+    /* 추가: 하단 고정을 위한 z-index */
+    z-index: 10;
+}
+
+/* 추가된 버튼 스타일 */
+.btn-outline {
+    background: transparent;
+    color: #6366f1;
+    border: 2px solid #6366f1;
+    flex: 2; /* Open 버튼을 더 넓게 */
+}
+
+.btn-outline:hover {
+    background: #6366f1;
+    color: white;
+}
+
+/* Warning Actions */
+.warning-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-warning-back {
+    flex: 1;
+    background: white;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+    padding: 10px;
+    font-size: 12px;
+    height: 40px; /* 높이 고정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-warning-back:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.btn-warning-confirm {
+    flex: 2;
+    background: #fca5a5;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+    height: 40px; /* 높이 고정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.btn-warning-confirm:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-warning-confirm:not(:disabled) {
+    background: #ef4444;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.btn-warning-confirm:not(:disabled):hover {
+    background: #dc2626;
+}
+
+#countdownText {
+    font-weight: 700;
+}
+
+/* Reset Button */
+.btn-reset {
+    width: 100px !important; /* !important 추가 */
+    padding: 8px 12px;
+    background: #fee2e2;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-reset:hover {
+    background: #fecaca;
+    border-color: #f87171;
+}
+
+.btn-reset i {
+    margin-right: 4px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-box {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-grad);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    margin-top: -40px;
+}
+
+.title {
+    position: relative;
+    padding-top: px;
+    margin-top: -45px;
+}
+
+.title h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    margin-top: 2.5px;
+    line-height: 1.2;
+    color: white;
+}
+
+.version {
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 3px 10px;
+    border-radius: 12px;
+    position: absolute;
+    top: 9px;
+    right: -65px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 60px;
+    margin-left: -177.5px;
+}
+
+.status-text {
+    color: white;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff6b6b;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.active {
+    background: #4ade80;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ============ CARDS (Menu Borders) ============ */
+.card {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: transform 0.2s;
+}
+
+.card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-title i { color: #8b5cf6; }
+
+/* ============ BUTTONS ============ */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.btn:active { transform: scale(0.98); }
+
+/* Save Button (Lime Theme) */
+.btn-save {
+    background: rgba(17, 209, 10, 0.742);
+    color: white;
+    box-shadow: 0 4px 15px rgba(9, 220, 54, 0.3);
+    font-size: 16px;
+}
+.btn-save:hover {
+    filter: brightness(1.1);
+}
+.btn-save-Text {
+    margin-top: 1.5px;
+    filter: brightness(1.2);
+}
+
+.status-message {
+    display: none; /* 기본적으로 숨김 */
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(132, 204, 22, 0.1); /* 연한 라임색 배경 */
+    border: 1px solid var(--accent-lime); /* 라임색 테두리 */
+    border-radius: 8px;
+    color: #4d7c0f; /* 진한 녹색 글씨 */
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Action Buttons */
+.btn-primary { background: var(--primary-grad); color: white; }
+.btn-danger { background: #fee2e2; color: var(--danger); }
+.btn-danger:hover { background: #fecaca; }
+
+.btn-group { display: flex; gap: 10px; }
+.btn-group .btn { flex: 1; }
+
+/* ============ SETTINGS LIST ============ */
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+.setting-row:last-child { border-bottom: none; }
+
+.setting-label {
+    display: flex;
+    flex-direction: column;
+}
+.setting-name { font-size: 14px; font-weight: 500; color: var(--text-dark); }
+.setting-desc { font-size: 11px; color: var(--text-gray); margin-top: 2px; }
+
+/* Toggle Switch (Purple & Lime) */
+.toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #cbd5e1;
+    transition: .3s;
+    border-radius: 24px;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; width: 18px;
+    left: 3px; bottom: 3px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Checked State: Lime Green for Toggles */
+input:checked + .slider { background: var(--accent-lime); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* ============ DROPDOWNS & EXPANDABLES ============ */
+.dropdown-trigger {
+    cursor: pointer;
+    padding: 8px 0;
+}
+.dropdown-icon { transition: transform 0.3s; font-size: 12px; }
+.dropdown-trigger.active .dropdown-icon { transform: rotate(180deg); }
+
+.dropdown-content {
+    display: none; /* Hidden by default */
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+}
+
+.dropdown-content.show { display: block; animation: fadeIn 0.3s; }
+
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.select-box {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-dark);
+    outline: none;
+    background: white;
+}
+
+/* ============ DEVELOPER ZONE ============ */
+.dev-zone {
+    display: none; /* Hidden by default */
+    border: 1px solid var(--border-color);
+    background: #fdfbff;
+}
+.dev-zone.active { display: block; animation: slideUp 0.4s; }
+
+.warning-box {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+.warning-box strong { display: block; margin-bottom: 4px; font-size: 13px; }
+
+.confirm-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+.confirm-input:focus { border-color: var(--danger); outline: none; }
+
+.action-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.btn-sm { font-size: 12px; padding: 8px; }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }

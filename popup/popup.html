@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Pro</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="brand">
+                <div class="logo-box">
+                    <img src="../assets/EntryPro48.png" alt="EntryProLogo">
+                </div>
+                <div class="title">
+                    <h1>Entry Pro</h1>
+                    <span class="version">v2.0.0</span>
+                </div>
+                <div class="status-badge" id="statusBadge">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Checking...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-area">
+            
+            <div class="card">
+                <div class="card-title"><i class="fas fa-save"></i> Save Changes</div>
+                <button id="saveBtn" class="btn btn-save">
+                    <i class="fas fa-check-circle"></i>
+                    <div class="btn-save-Text">Save Settings</div>
+                </button>
+                <div id="saveStatusMessage" class="status-message">
+                    Changes have been saved.<br>
+                    Refresh the entry page to apply them.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-bolt"></i> Quick Actions</div>
+                <div class="btn-group">
+                    <button id="injectNow" class="btn btn-primary">
+                        <i class="fas fa-code"></i> Inject Script
+                    </button>
+                    <button id="removeScript" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Remove Script
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-sliders-h"></i> Settings</div>
+                
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Auto-inject Script</span>
+                        <span class="setting-desc">Load automatically on workspace</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="autoInject" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Inject Notifications</span>
+                        <span class="setting-desc">Show success alerts</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="notifications">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Debug Mode</span>
+                        <span class="setting-desc">Show more logs in console</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="debugMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Language</span>
+                    </div>
+                    <div style="width: 100px;">
+                        <select class="select-box">
+                            <option value="en">English</option>
+                            <option value="ko">한국어</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-row dropdown-trigger" id="catTrigger">
+                    <div class="setting-label">
+                        <span class="setting-name">Display Categories</span>
+                        <span class="setting-desc">Select visible block categories</span>
+                    </div>
+                    <i class="fas fa-chevron-down dropdown-icon"></i>
+                </div>
+                
+                <div class="dropdown-content" id="catContent">
+                    <div class="category-grid">
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size:12px;">Start</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius:20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size:12px;">Flow</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius:20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size:12px;">Motion</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius:20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size:12px;">Looks</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius:20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Brush</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Sound</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Decision</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Figures</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Variable</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Function</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Table</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">AI</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Extension</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Extension</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">Hardware</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-name" style="font-size: 12px;">NPI</span>
+                            <label class="toggle" style="width: 44px; height: 24px;">
+                                <input type="checkbox" checked>
+                                <span class="slider" style="border-radius: 20px;"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Reset All Settings</span>
+                        <span class="setting-desc">Reset settings</span>
+                    </div>
+                    <button class="btn btn-reset" id="resetSettingsBtn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                </div>
+
+                <div class="setting-row">
+                    <div class="setting-label">
+                        <span class="setting-name">Developer Mode</span>
+                        <span class="setting-desc">Enable advanced script injection</span>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="devModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card dev-zone" id="devZone">
+                <div class="card-title" style="color:#d946ef;"><i class="fas fa-terminal"></i> Advanced Tools</div>
+                
+                <!-- Warning Box (초기에는 숨김) -->
+                <div class="warning-box" id="warningBox" style="display: none;">
+                    <strong><i class="fas fa-exclamation-triangle"></i> WARNING</strong>
+                    This feature directly inserts JavaScript code into your entry. Unknown scripts can steal account information or damage your project. To continue, press the "I know what I'm doing." button after 10 seconds.
+                    
+                    <div class="warning-actions">
+                        <button class="btn btn-warning-back" id="warningBackBtn">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-warning-confirm" id="warningConfirmBtn" disabled>
+                            <span id="countdownText">(10s) </span>I know what I'm doing.
+                        </button>
+                    </div>
+                </div>
+            
+                <!-- Action Grid (초기에는 보임) -->
+                <div class="action-grid" id="actionGrid">
+                    <button class="btn btn-secondary btn-sm" id="addBlocksBtn">
+                        <i class="fas fa-plus"></i> Add Blocks
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="addCategoryBtn">
+                        <i class="fas fa-folder-plus"></i> Add Category
+                    </button>
+                    <button class="btn btn-danger btn-sm" style="background:#fee2e2; color: #ef4444;" id="delBlocksBtn">
+                        <i class="fas fa-minus"></i> Del Blocks
+                    </button>
+                    <button class="btn btn-danger btn-sm" style="background:#fee2e2; color: #ef4444;" id="delCategoryBtn">
+                        <i class="fas fa-folder-minus"></i> Del Category
+                    </button>
+                </div>
+            </div>
+
+            <div style="height: 20px;"></div>
+        </div>
+        <div class="footer">
+            <button id="openWorkspaceBtn" class="btn btn-outline">
+                <i class="fas fa-external-link-alt"></i> Open Entry Workspace
+            </button>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

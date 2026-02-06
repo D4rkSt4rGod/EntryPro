@@ -1,0 +1,53 @@
+{
+  
+  "name": "Entry Pro",
+
+  "description": "Professional blocks for Entry",
+
+  "version": "2.0.0",
+
+  "manifest_version": 3,
+
+  "permissions": ["scripting", "storage", "activeTab"],
+
+  "host_permissions": [
+    "https://playentry.org/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://playentry.org/*"],
+      "js": ["content/content.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["inject/inject.js", "assets/*", "popup/icons/*"],
+      "matches": ["https://playentry.org/*"]
+    }
+  ],
+
+  "icons": {
+    "16": "assets/EntryPro16.png",
+    "32": "assets/EntryPro32.png",
+    "48": "assets/EntryPro48.png",
+    "128": "assets/EntryPro128.png",
+    "1024": "assets/EntryPro1024.png"
+  },
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/EntryPro16.png",
+      "32": "assets/EntryPro32.png",
+      "48": "assets/EntryPro48.png",
+      "128": "assets/EntryPro128.png",
+      "1024": "assets/EntryPro1024.png"
+    },
+
+    "default_title": "Entry Pro"
+  }
+  
+}

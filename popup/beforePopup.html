@@ -1,0 +1,557 @@
+<!-- popup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Pro</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============ RESET & BASE STYLES ============ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* PREVENT DRAG */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+            width: 400px;
+            height: 600px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ============ HEADER SECTION ============ */
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 20px;
+            color: white;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        /* Logo & Title */
+        .logo-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        .title {
+            position: relative;
+            padding-top: 5px;
+        }
+
+        .title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            margin-top: 2.5px;
+            line-height: 1.2;
+        }
+
+        .version {
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            position: absolute;
+            top: 12.5px;
+            right: -65px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.active {
+            background: #4ade80;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+
+        /* ============ MAIN CONTENT ============ */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        /* Section Styles */
+        .section {
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .section h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            color: #374151;
+            margin-bottom: 16px;
+        }
+
+        .section h3 i {
+            color: #4f46e5;
+        }
+
+        /* ============ BUTTONS ============ */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #4f46e5;
+            border: 2px solid #4f46e5;
+        }
+
+        .btn-outline:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-text {
+            background: transparent;
+            color: #6b7280;
+        }
+
+        .btn-text:hover {
+            color: #4f46e5;
+        }
+
+        /* ============ SETTINGS ============ */
+        .settings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .setting-info i {
+            color: #4f46e5;
+            font-size: 18px;
+            min-width: 24px;
+        }
+
+        .setting-title {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .setting-desc {
+            display: block;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #d1d5db;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* ============ CATEGORIES ============ */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .category-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+            background: #f1f5f9;
+            border-color: #4f46e5;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+        }
+
+        .category-card i {
+            font-size: 24px;
+            color: #4f46e5;
+            margin-bottom: 8px;
+        }
+
+        .category-card span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        /* ============ INFORMATION SECTION ============ */
+        .info-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #bae6fd;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item i {
+            color: #4f46e5;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: white;
+        }
+
+        /* ============ SCROLLBAR ============ */
+        .main-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+
+        /* ============ UTILITY CLASSES ============ */
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .mt-10 { margin-top: 10px; }
+        .mt-20 { margin-top: 20px; }
+        .mb-10 { margin-bottom: 10px; }
+        .mb-20 { margin-bottom: 20px; }
+        .p-10 { padding: 10px; }
+        .p-20 { padding: 20px; }
+        .hidden { display: none; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-5 { gap: 5px; }
+        .gap-10 { gap: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <img src="../assets/EntryPro48.png" alt="Entry Pro Logo" class="logo">
+                <div class="title">
+                    <h1>Entry Pro</h1>
+                    <span class="version">v2.0.0</span>
+                </div>
+            </div>
+            <div class="status-badge" id="statusBadge">
+                <span class="status-dot"></span>
+                <span class="status-text">Checking...</span>
+            </div>
+        </div>
+        
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Quick Actions -->
+            <div class="section">
+                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                <div class="button-group">
+                    <button id="injectBtn" class="btn btn-primary">
+                        <i class="fas fa-code"></i> Inject NPI Now
+                    </button>
+                    <button id="refreshBtn" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt"></i> Refresh Blocks
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="section">
+                <h3><i class="fas fa-cog"></i> Settings</h3>
+                <div class="settings-list">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-robot"></i>
+                            <div>
+                                <span class="setting-title">Auto-inject NPI</span>
+                                <span class="setting-desc">Automatically load NPI on Entry workspace</span>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="autoInjectToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-bell"></i>
+                            <div>
+                                <span class="setting-title">Injection Notifications</span>
+                                <span class="setting-desc">Show success/failure alerts</span>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="notificationsToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <i class="fas fa-eye"></i>
+                            <div>
+                                <span class="setting-title">Show Category</span>
+                                <span class="setting-desc">Display NPI category in block menu</span>
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="showCategoryToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Block Categories -->
+            <div class="section">
+                <h3><i class="fas fa-cubes"></i> NPI Blocks</h3>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="API">
+                        <i class="fas fa-code"></i>
+                        <span>API Blocks</span>
+                    </div>
+                    <div class="category-card" data-category="variable">
+                        <i class="fas fa-database"></i>
+                        <span>Variable</span>
+                    </div>
+                    <div class="category-card" data-category="web">
+                        <i class="fas fa-globe"></i>
+                        <span>Web</span>
+                    </div>
+                    <div class="category-card" data-category="Entry">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Entry</span>
+                    </div>
+                    <div class="category-card" data-category="window">
+                        <i class="fas fa-window-maximize"></i>
+                        <span>Window</span>
+                    </div>
+                    <div class="category-card" data-category="math">
+                        <i class="fas fa-calculator"></i>
+                        <span>Math</span>
+                    </div>
+                    <div class="category-card" data-category="Illegal">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information -->
+            <div class="section info-section">
+                <h3><i class="fas fa-info-circle"></i> Information</h3>
+                <div class="info-item">
+                    <i class="fas fa-user"></i>
+                    <span>NPI Creator: Police Crocodile</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-cube"></i>
+                    <span>Total NPI Blocks: 100+</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-sync"></i>
+                    <span>SPA Compatible: Yes</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <button id="openWorkspaceBtn" class="btn btn-outline">
+                <i class="fas fa-external-link-alt"></i> Open Entry Workspace
+            </button>
+            <button id="debugBtn" class="btn btn-text">
+                <i class="fas fa-bug"></i> Debug
+            </button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
