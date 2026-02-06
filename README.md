@@ -14,7 +14,9 @@ The current system has been provisionally built to automatically insert NPI bloc
 - Libraries
 - Features
 - Installation
+- Usage
 - Reference
+- Copyright and License
 
 ## Getting Started
 
@@ -82,6 +84,87 @@ Currently, installation from the Chrome Web Store is not possible. Please use ma
 3. Enable **Developer mode** (top right)
 4. Click **Load unpacked**
 5. Select the downloaded folder
+
+## Usage
+
+### Basic Operation
+
+1. `Accessing Entry Workspace`:
+
+   - Navigate to [playentry.org/ws](https://playentry.org/ws) or any Entry workspace page
+   - The extension will automatically detect the workspace and show its status
+
+2. `Using the Popup Interface`:
+
+   - Click the EntryPro icon in your Chrome toolbar to open the popup
+   - Check the status indicator to verify NPI blocks are loaded
+   - Use the green **Save** button to preserve your settings
+
+### Popup Features
+
+#### Quick Actions
+
+- `Inject Script Now`: Manually inject NPI blocks immediately
+- `Remove Script`: Remove NPI blocks and reset to default Entry
+
+#### Settings Configuration
+
+- `Auto-inject Script`: Toggle automatic injection on workspace pages
+- `Inject Notifications`: Control success alert display
+- `Display Categories`: Enable/disable specific block categories:
+  - **Start**
+  - **Flow**
+  - **Moving**
+  - **Looks**
+  - **Brush**
+  - **Text**
+  - **Sound**
+  - **Judgement**
+  - **Calculation**
+  - **Variable**
+  - **Function**
+  - **Analysis**
+  - **AI Utilize**
+  - **Expansion**
+  - **Arduino**
+  - **NPI**
+- `Reset All Settings`: Reset Settings
+- `Debug Mode`: Enable detailed console logging for troubleshooting
+- `Developer Mode`: Unlock advanced features (see below)
+- `Language Settings`: Switch between multiple interface languages
+
+#### Developer Mode (Advanced)
+
+`Warning: Developer features require explicit confirmation and are intended for advanced users only.`
+
+When Developer Mode is enabled:
+
+1. Enable Developer Mode.
+2. Wait 10 seconds and click the "I know what I'm doing" button.
+
+Feather of Developer Mode:
+
+- **Add Blocks**: Create custom blocks
+- **Add Categories**: Create new block categories
+- **Delete Blocks**: Remove custom blocks
+- **Delete Categories**: Remove custom categories
+
+### Automatic Injection Flow
+
+1. User visits `https://playentry.org/ws/`.
+2. EntryPro detects workspace.
+3. Checks auto-inject setting `(default: ON)`.
+4. If enabled Injects NPI blocks.
+5. Updates status indicator.
+6. Blocks available in Entry workspace.
+
+## Troubleshooting
+
+| Issue                | Solution                                                                          |
+| -------------------- | --------------------------------------------------------------------------------- |
+| Blocks not appearing | 1. Check status in popup<br>2. Click "Inject Script Now" or Refresh the page      |
+| Popup not opening    | 1. Ensure extension is enabled (`chrome://extensions`)<br>2. Reload the extension |
+| Console errors       | Enable Debug Mode in settings and check Browser Console                           |
 
 ## Reference
 
