@@ -1,2 +1,7 @@
-removeScript 버튼 누르면 Category가 모두 없어짐 이거 고치기
-README.md 작성하기 (진행중)
+removeScript 하고 injectScript가 작동이 안됨 이거 고치기
+injectNofication 기능 구현하기
+Debug mode 구현하기
+Language 설정 기능 구현하기
+Display Category 설정 기능 구현하기
+Developer Mode 기능 구현하기
+헤더에 Checking을 변경 시키는 로직 구현하기

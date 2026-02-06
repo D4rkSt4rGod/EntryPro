@@ -260,30 +260,8 @@ if (removeScriptBtn) {
                     
                     // API 카테고리를 제외한 카테고리 뷰 재생성
                     if (typeof Entry !== 'undefined' && Entry.playground && Entry.playground.blockMenu) {
-                        Entry.playground.blockMenu._generateCategoryView([
-                            { category: 'start', visible: true },
-                            { category: 'flow', visible: true },
-                            { category: 'moving', visible: true },
-                            { category: 'looks', visible: true },
-                            { category: 'brush', visible: true },
-                            { category: 'text', visible: true },
-                            { category: 'sound', visible: true },
-                            { category: 'judgement', visible: true },
-                            { category: 'calc', visible: true },
-                            { category: 'variable', visible: true },
-                            { category: 'func', visible: true },
-                            { category: 'analysis', visible: true },
-                            { category: 'ai_utilize', visible: true },
-                            { category: 'expansion', visible: true },
-                            { category: 'arduino', visible: false }
-                        ]);
                         
-                        // API 카테고리 블록 데이터 제거
-                        Entry.staticBlocks = Entry.staticBlocks.filter(
-                            block => block.category !== 'API'
-                        );
-                        
-                        Entry.playground.blockMenu._categoryData = Entry.staticBlocks;
+                        Entry.playground.blockMenu.banCategory('API')
                         
                         console.log('[Entry Pro] API category removed without reload');
                     }
