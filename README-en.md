@@ -1,5 +1,7 @@
 # EntryPro
 
+![EntryProLogo](assets/EntryPro48.png)
+
 EntryPro - Unofficial Blocks Auto-Injector for playentry.org
 
 EntryPro is an unofficial tool designed to automatically inject unoficial and custom blocks into the playentry.org platform. This tool aims to enhance the user experience by providing additional functionalities and features that are not available in the standard version of playentry.org.
@@ -122,6 +124,10 @@ git clone https://github.com/(your-username)/EntryPro.git
    - Use the green **Save** button to preserve your settings
 
 ### Popup Features
+
+#### Popup Image
+
+![EntryProPopupImg](assets/EntryProPopup.png)
 
 #### Quick Actions
 

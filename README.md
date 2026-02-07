@@ -1,5 +1,7 @@
 # EntryPro
 
+![EntryProLogo](assets/EntryPro48.png)
+
 EntryPro - playentry.org용 비공식 블록 자동 삽입 도구
 
 EntryPro는 playentry.org 플랫폼에 비공식 및 사용자 지정 블록을 자동으로 삽입하도록 설계된 비공식 도구입니다. 이 도구는 playentry.org 표준 버전에는 없는 추가 기능과 특징을 제공하여 사용자 경험을 향상시키는 것을 목표로 합니다.
@@ -124,6 +126,10 @@ git clone https://github.com/(사용자 이름)/EntryPro.git
 - 녹색 **저장** 버튼을 사용하여 설정을 저장하세요
 
 ### 팝업 기능
+
+#### 팝업 이미지
+
+![EntryProPopupImg](assets/EntryProPopup.png)
 
 #### 빠른 실행
 
