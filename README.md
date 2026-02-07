@@ -53,7 +53,7 @@ EntryPro는 playentry.org 플랫폼에 비공식 및 사용자 지정 블록을 
 
 - `playentry.org/*` - 전체 액세스 권한
 
-#### 개발 개발 환경
+#### 개발 환경
 
 - `JavaScript` - ES6 이상
 
