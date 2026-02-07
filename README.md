@@ -78,7 +78,7 @@ Currently, installation from the Chrome Web Store is not possible. Please use ma
 1. Clone this repository
 
 ```bash
-   git clone https://github.com/(your-username)/EntryPro.git
+git clone https://github.com/(your-username)/EntryPro.git
 ```
 
 2. Open Chrome and go to `chrome://extensions/`
