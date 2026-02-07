@@ -1,37 +1,37 @@
 # EntryPro
 
-EntryPro - Unofficial Blocks Auto-Injector for playentry.org
+EntryPro - playentry.org용 비공식 블록 자동 삽입 도구
 
-EntryPro is an unofficial tool designed to automatically inject unoficial and custom blocks into the playentry.org platform. This tool aims to enhance the user experience by providing additional functionalities and features that are not available in the standard version of playentry.org.
+EntryPro는 playentry.org 플랫폼에 비공식 및 사용자 지정 블록을 자동으로 삽입하도록 설계된 비공식 도구입니다. 이 도구는 playentry.org 표준 버전에는 없는 추가 기능과 특징을 제공하여 사용자 경험을 향상시키는 것을 목표로 합니다.
 
-**Current Status**: 0.1.0 - Currently supports NPI Blocks v1.6
+**현재 상태**: 0.1.0 - 현재 NPI 블록 v1.6을 지원합니다.
 
-The current system has been provisionally built to automatically insert NPI blocks. Once EntryPro blocks are built, we plan to build a system that automatically inserts EntryPro blocks.
+현재 시스템은 NPI 블록을 자동으로 삽입하도록 임시로 구축되었습니다. EntryPro 블록이 개발되면 EntryPro 블록을 자동으로 삽입하는 시스템을 구축할 계획입니다.
 
-## Table of Contents
+## 목차
 
-- Getting Started
-- Features
-- Installation
-- Usage
-- Troubleshooting
-- Contributing
-- Reference
-- Copyright and License
+- 시작하기
+- 기능
+- 설치하기
+- 사용법
+- 문제 해결
+- 기여하기
+- 참고 자료
+- 저작권 및 라이선스
 
-## Getting Started
+## 시작하기
 
-### Libraries
+### 라이브러리
 
-#### Chrome Extension
+#### Chrome 확장 프로그램
 
-- `Manifest Version` - 3
+- `매니페스트 버전` - 3
 
-- `Extension Version` - 0.1.0
+- `확장 프로그램 버전` - 0.1.0
 
-- `Minimum Chrome` - 88+
+- `최소 Chrome 요구 사항` - 88+
 
-#### Chrome APIs
+#### Chrome API
 
 - `chrome.scripting` - scripting
 
@@ -39,207 +39,259 @@ The current system has been provisionally built to automatically insert NPI bloc
 
 - `chrome.tabs` - activeTab
 
-#### External libraries
+#### 외부 라이브러리
 
 - `Font Awesome` - 6.4.0
 
-#### Internal components
+#### 내부 구성 요소
 
 - `EntryPro Extension` - 0.1.0
 
 - `NPI Blocks` - 1.6
 
-#### Host Permissions
+#### 호스트 권한
 
-- `playentry.org/*` - Full access
+- `playentry.org/*` - 전체 액세스 권한
 
-#### Development environment
+#### 개발 개발 환경
 
-- `JavaScript` - ES6+
+- `JavaScript` - ES6 이상
 
 - `HTML` - 5
 
 - `CSS` - 3
 
-## Features
+## 기능
 
-- `Auto-injection`: Automatically injects NPI blocks when accessing Entry workspace
-- `Customizable Settings`: Control auto-injection, notifications, debug mode, and more through a popup.
-- `Developer Mode`: Advanced tools for custom block management
+- `자동 삽입`: Entry 워크스페이스에 접근할 때 NPI 블록을 자동으로 삽입합니다.
+- `사용자 지정 설정`: 팝업 창을 통해 자동 삽입, 알림, 디버그 모드 등을 제어할 수 있습니다.
+- `개발자 모드`: 사용자 지정 블록 관리를 위한 고급 도구를 제공합니다.
 
-## Installation
+### 미구현 기능
 
-### From Chrome Web Store (Recommended)
+EntryPro는 현재 알파 버전이므로 일부 기능이 불완전하거나 불안정할 수 있습니다. 양해 부탁드립니다.
 
-Currently, installation from the Chrome Web Store is not possible. Please use manual installation.
+- `injectScript`: `removeScript` 버튼을 누른 후 `injectScript` 버튼을 눌러도 스크립트가 삽입되지 않는 버그가 있습니다.
 
-### Manual Installation (Developer Mode)
+- `injectNofication`: 팝업 설정의 `injectNofication` 설정이 아직 구현되지 않았습니다.
 
-1. Clone this repository
+- `debugMode`: 디버그 모드를 비활성화해도 콘솔에 많은 로그가 출력됩니다.
+
+- `Language`: 팝업에서 언어를 변경해도 적용되지 않습니다.
+
+- `displayCategory`: 현재 `displayCategory` 설정을 변경해도 적용되지 않습니다.
+
+- `pageStatusChecker`: 현재 팝업 헤더의 `pageStatusChecker`가 제대로 작동하지 않습니다.
+
+- `developerMode`: 개발자 모드가 아직 구현되지 않았습니다.
+
+버그나 구현되지 않은 기능을 더 발견하시면 이슈를 통해 보고해 주세요.
+
+## 설치하기
+
+### Chrome 웹 스토어에서 설치 (권장)
+
+현재 Chrome 웹 스토어에서 설치하는 것은 불가능합니다. 수동으로 설치해 주세요.
+
+### 수동 설치
+
+1. 이 저장소를 클론하세요
 
 ```bash
-git clone https://github.com/(your-username)/EntryPro.git
+git clone https://github.com/(사용자 이름)/EntryPro.git
 ```
 
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable **Developer mode** (top right)
-4. Click **Load unpacked**
-5. Select the downloaded folder
+2. Chrome을 열고 `chrome://extensions/`로 이동하세요
+3. **개발자 모드**를 활성화하세요(오른쪽 상단)
+4. **압축 해제된 파일 불러오기**를 클릭하세요
+5. 다운로드한 폴더를 선택하세요
 
-## Usage
+## 사용법
 
-### Basic Operation
+### 기본 작동
 
-1. `Accessing Entry Workspace`:
+1. `Entry 워크스페이스 접속`:
 
-   - Navigate to [playentry.org/ws](https://playentry.org/ws) or any Entry workspace page
-   - The extension will automatically detect the workspace and show its status
+- [playentry.org/ws](https://playentry.org/ws) 또는 다른 Entry 워크스페이스 페이지로 이동하세요
+- 확장 프로그램이 워크스페이스를 자동으로 감지하고 상태를 표시합니다
 
-2. `Using the Popup Interface`:
+2. `팝업 인터페이스 사용`:
 
-   - Click the EntryPro icon in your Chrome toolbar to open the popup
-   - Check the status indicator to verify NPI blocks are loaded
-   - Use the green **Save** button to preserve your settings
+- Chrome 도구 모음에서 EntryPro 아이콘을 클릭하여 팝업을 여세요
 
-### Popup Features
+- 상태 표시기를 확인하여 NPI 블록이 로드되었는지 확인하세요
 
-#### Quick Actions
+- 녹색 **저장** 버튼을 사용하여 설정을 저장하세요
 
-- `Inject Script Now`: Manually inject NPI blocks immediately
-- `Remove Script`: Remove NPI blocks and reset to default Entry
+### 팝업 기능
 
-#### Settings Configuration
+#### 빠른 실행
 
-- `Auto-inject Script`: Toggle automatic injection on workspace pages
-- `Inject Notifications`: Control success alert display
-- `Display Categories`: Enable/disable specific block categories:
-  - **Start**
-  - **Flow**
-  - **Moving**
-  - **Looks**
-  - **Brush**
-  - **Text**
-  - **Sound**
-  - **Judgement**
-  - **Calculation**
-  - **Variable**
-  - **Function**
-  - **Analysis**
-  - **AI Utilize**
-  - **Expansion**
-  - **Arduino**
-  - **NPI**
-- `Reset All Settings`: Reset Settings
-- `Debug Mode`: Enable detailed console logging for troubleshooting
-- `Developer Mode`: Unlock advanced features (see below)
-- `Language Settings`: Switch between multiple interface languages
+- `스크립트 삽입` - `지금`: NPI 블록을 즉시 수동으로 삽입합니다.
+- `스크립트 제거`: NPI 블록을 제거하고 기본 항목으로 재설정합니다.
 
-#### Developer Mode (Advanced)
+#### 설정 구성
 
-`Warning: Developer features require explicit confirmation and are intended for advanced users only.`
+- `스크립트 자동 삽입`: 작업 공간 페이지에서 자동 삽입을 켜거나 끕니다.
+- `삽입 알림`: 성공 알림 표시를 제어합니다.
+- `표시 범주`: 특정 블록 범주를 활성화/비활성화합니다.
 
-When Developer Mode is enabled:
+- **시작**
 
-1. Enable Developer Mode.
-2. Wait 10 seconds and click the "I know what I'm doing" button.
+- **흐름**
 
-Feather of Developer Mode:
+- **이동**
 
-- **Add Blocks**: Create custom blocks
-- **Add Categories**: Create new block categories
-- **Delete Blocks**: Remove custom blocks
-- **Delete Categories**: Remove custom categories
+- **모양**
 
-### Automatic Injection Flow
+- **브러시**
 
-1. User visits `https://playentry.org/ws/`.
-2. EntryPro detects workspace.
-3. Checks auto-inject setting `(default: ON)`.
-4. If enabled Injects NPI blocks.
-5. Updates status indicator.
-6. Blocks available in Entry workspace.
+- **텍스트**
 
-## Troubleshooting
+- **소리**
 
-| Issue                | Solution                                                                          |
+- **판단**
+
+- **계산**
+
+- **변수**
+
+- **함수**
+
+- **분석**
+
+- **AI 활용**
+
+- **확장**
+
+- **아두이노**
+
+- **NPI**
+- `모든 설정 초기화`: 설정을 초기화합니다.
+- `디버그 모드`: 문제 해결을 위해 자세한 콘솔 로깅을 활성화합니다.
+- `개발자 모드`: 고급 기능을 잠금 해제합니다(아래 참조).
+- `언어 설정`: 여러 인터페이스 간에 전환합니다. 언어
+
+#### 개발자 모드 (고급)
+
+`경고: 개발자 기능은 명시적인 확인이 필요하며 고급 사용자만 사용할 수 있습니다.`
+
+개발자 모드 활성화 방법:
+
+1. 개발자 모드를 활성화합니다.
+
+2. 10초간 기다린 후 "사용 방법을 알고 있습니다" 버튼을 클릭합니다.
+
+개발자 모드 기능:
+
+- **블록 추가**: 사용자 지정 블록 생성
+
+- **카테고리 추가**: 새 블록 카테고리 생성
+
+- **블록 삭제**: 사용자 지정 블록 삭제
+
+- **카테고리 삭제**: 사용자 지정 카테고리 삭제
+
+### 자동 삽입 흐름
+
+1. 사용자가 `https://playentry.org/ws/`에 접속합니다.
+
+2. EntryPro가 워크스페이스를 감지합니다.
+
+3. 자동 삽입 설정(기본값: 켜짐)을 확인합니다.
+
+4. 활성화된 경우 NPI 블록을 삽입합니다.
+
+5. 상태 표시기를 업데이트합니다.
+
+6. Entry 워크스페이스에서 블록을 사용할 수 있습니다.
+
+## 문제 해결
+
+| 문제 | 해결 방법 |
+
 | -------------------- | --------------------------------------------------------------------------------- |
-| Blocks not appearing | 1. Check status in popup<br>2. Click "Inject Script Now" or Refresh the page      |
-| Popup not opening    | 1. Ensure extension is enabled (`chrome://extensions`)<br>2. Reload the extension |
-| Console errors       | Enable Debug Mode in settings and check Browser Console                           |
 
-## Contributing
+| 블록이 나타나지 않음 | 1. 팝업에서 상태를 확인하세요.<br>2. "지금 스크립트 삽입"을 클릭하거나 페이지를 새로 고침하세요. |
 
-We welcome contributions to EntryPro! Here's how you can help:
+| 팝업이 열리지 않음 | 1. 확장 프로그램이 활성화되어 있는지 확인하세요(`chrome://extensions`).<br>2. 확장 프로그램을 다시 로드하세요. |
 
-### Ways to Contribute
+| 콘솔 오류 | 설정에서 디버그 모드를 활성화하고 브라우저 콘솔을 확인하세요. |
 
-#### Code Contributions:
+## 기여하기
 
-- New Block Development: Create new custom blocks for Entry
-- Bug Fixes: Identify and fix issues in the extension
-- Feature Development: Add new features to the popup
-- Code Optimization: Improve performance and efficiency
-- Documentation: Improve README, comments, and guides
+EntryPro에 기여해 주시면 감사하겠습니다! 다음과 같은 방법으로 참여하실 수 있습니다.
 
-#### Non-Code Contributions:
+### 기여 방법
 
-- Block Ideas: Suggest new block categories and functionalities
-- Testing: Test the extension and report bugs
-- Design: Improve UI/UX design
-- Translation: Help translate to other languages
-- Documentation: Write tutorials and guides
+#### 코드 기여:
 
-#### Development Setup
+- 새 블록 개발: Entry에 사용할 새로운 사용자 지정 블록 제작
+- 버그 수정: 확장 ​​프로그램의 문제점 발견 및 수정
+- 기능 개발: 팝업에 새로운 기능 추가
+- 코드 최적화: 성능 및 효율성 개선
+- 문서화: README, 주석 및 가이드 개선
 
-###### Fork the repository on GitHub
+#### 코드 외 기여:
 
-##### Clone your fork locally:
+- 블록 아이디어: 새로운 블록 카테고리 및 기능 제안
+- 테스트: 확장 프로그램 테스트 및 버그 보고
+- 디자인: UI/UX 디자인 개선
+- 번역: 다른 언어로 번역 지원
+- 문서화: 튜토리얼 및 가이드 작성
+
+#### 개발 환경 설정
+
+###### GitHub에서 저장소 포크하기
+
+##### 포크한 저장소를 로컬에 클론하기:
 
 ```bash
 git clone https://github.com/(your_username)/EntryPro.git
 cd EntryPro
 ```
 
-##### Create a new branch for your feature:
+##### 기능 추가를 위한 새 브랜치 생성:
 
 ```bash
 git checkout -b feature/(your-feature-name)
 ```
 
-###### Make your changes and test them
+###### 변경 사항 적용 및 테스트
 
-##### Commit and push your changes:
+##### 변경 사항 커밋 및 푸시:
 
 ```bash
 git add .
+
 git commit -m "Add: your feature description"
 git push origin feature/(your-feature-name)
 ```
 
-###### Create a Pull Request on GitHub
+###### GitHub에 풀 리퀘스트 생성
 
-## Reference
+## 참고 자료
 
-The block addition library is referenced from EntryJS Docs.
+블록 추가 라이브러리는 EntryJS 문서에서 참조됩니다.
 
-- [EntryJS Documentation](https://docs.playentry.org/)
-- [EntryJS GitHub Repository](https://github.com/entrylabs/entryjs)
+- [EntryJS 문서](https://docs.playentry.org/)
+- [EntryJS GitHub 저장소](https://github.com/entrylabs/entryjs)
 
-The block addition method is based on NPI by **경찰 악어씨**.
+블록 추가 방식은 **경찰 악어씨**의 NPI를 기반으로 합니다.
 
-- [NPI Blocks v1.6 Guide](https://playentry.org/community/tips/6929b651c4abc99dd4e24c47)
-- [경찰 악어씨's Profile](https://playentry.org/profile/683c3803cf1a83502cb03fa4?sort=created&term=all&isOpen=all)
+- [NPI 블록 v1.6 가이드](https://playentry.org/community/tips/6929b651c4abc99dd4e24c47)
+- [경찰 악어씨 프로필](https://playentry.org/profile/683c3803cf1a83502cb03fa4?sort=created&term=all&isOpen=all)
 
-## Copyright and License
+## 저작권 및 라이선스
 
-EntryPro Copyright (c) 2026 D4rkSt4rGod.
+EntryPro 저작권 (c) 2026 D4rkSt4rGod.
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+Apache License, Version 2.0("라이선스")에 따라 사용이 허가됩니다. 라이선스를 준수하지 않고는 이 파일을 사용할 수 없습니다. 본 라이선스의 사본은 다음 주소에서 얻을 수 있습니다.
 
 ```
 http://www.apache.org/licenses/LICENSE-2.0
 ```
 
-or LICENSE file
+또는 LICENSE 파일
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+관련 법률에서 요구하거나 서면으로 동의한 경우가 아닌 한, 본 라이선스에 따라 배포되는 소프트웨어는 어떠한 보증이나 조건도 없이 "있는 그대로" 배포됩니다. 라이선스에 명시된 특정 언어에 대한 사용 권한 및 제한 사항은 라이선스 파일을 참조하십시오.
