@@ -71,7 +71,7 @@ EntryPro는 playentry.org 플랫폼에 비공식 및 사용자 지정 블록을 
 
 ### 미구현 기능
 
-EntryPro는 현재 알파 버전이므로 일부 기능이 불완전하거나 불안정할 수 있습니다. 양해 부탁드립니다.
+EntryPro는 현재 알파 버전이므로 일부 기능이 구현되지 않았거나 불안정할 수 있습니다. 양해 부탁드립니다.
 
 - `injectScript`: `removeScript` 버튼을 누른 후 `injectScript` 버튼을 눌러도 스크립트가 삽입되지 않는 버그가 있습니다.
 
